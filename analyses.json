@@ -1,0 +1,57 @@
+[
+  {
+    "name": "2001 SR Long term",
+    "description": "Analysis file: 2001.SR_Long_term.pws",
+    "url": "https://github.com/ECTI-DATA/Trend-Mind-AI-Explorer/releases/download/1.2/2001.SR_Long_term.pws"
+  },
+  {
+    "name": "2001 SR Short Term",
+    "description": "Analysis file: 2001.SR_Short_Trerm.pws",
+    "url": "https://github.com/ECTI-DATA/Trend-Mind-AI-Explorer/releases/download/1.2/2001.SR_Short_Trerm.pws"
+  },
+  {
+    "name": "AlDrees-ShortTerm-4200.pws",
+    "description": "Analysis file: AlDrees_ShortTerm_4200.pws",
+    "url": "https://github.com/ECTI-DATA/Trend-Mind-AI-Explorer/releases/download/1.2/AlDrees-ShortTerm-4200.pws"
+  },
+  {
+    "name": "BTC-USDT Jan2025 Peak",
+    "description": "Analysis file: BTC-USDT_Jan2025_Peak.pws",
+    "url": "https://github.com/ECTI-DATA/Trend-Mind-AI-Explorer/releases/download/1.2/BTC-USDT_Jan2025_Peak.pws"
+  },
+  {
+    "name": "BTC-USDT Long Term",
+    "description": "Analysis file: BTC-USDT_Long_Term.pws",
+    "url": "https://github.com/ECTI-DATA/Trend-Mind-AI-Explorer/releases/download/1.2/BTC-USDT_Long_Term.pws"
+  },
+  {
+    "name": "BTC-USDT Short term updated-AUG2025",
+    "description": "Analysis file: BTC-USDT_Short_term_updated-AUG2025.pws",
+    "url": "https://github.com/ECTI-DATA/Trend-Mind-AI-Explorer/releases/download/1.2/BTC-USDT_Short_term_updated-AUG2025.pws"
+  },
+  {
+    "name": "Gold future",
+    "description": "Analysis file: Gold_future.pws",
+    "url": "https://github.com/ECTI-DATA/Trend-Mind-AI-Explorer/releases/download/1.2/Gold_future.pws"
+  },
+  {
+    "name": "TASI current trend line",
+    "description": "Analysis file: TASI_current_trend_line.pws",
+    "url": "https://github.com/ECTI-DATA/Trend-Mind-AI-Explorer/releases/download/1.2/TASI_current_trend_line.pws"
+  },
+  {
+    "name": "TASI SR ShortTerm",
+    "description": "Analysis file: TASI_SR_ShortTerm.pws",
+    "url": "https://github.com/ECTI-DATA/Trend-Mind-AI-Explorer/releases/download/1.2/TASI_SR_ShortTerm.pws"
+  },
+  {
+    "name": "TASI trend line sample",
+    "description": "Analysis file: TASI_trend_line_sample.pws",
+    "url": "https://github.com/ECTI-DATA/Trend-Mind-AI-Explorer/releases/download/1.2/TASI_trend_line_sample.pws"
+  },
+  {
+      "name": "THIMAR.4160_Short-term.pws",
+    "description": "Analysis file: THIMAR.4160_Short-term.pws",
+    "url": "https://github.com/ECTI-DATA/Trend-Mind-AI-Explorer/releases/download/1.2/THIMAR.4160_Short-term.pws"
+  }
+]
