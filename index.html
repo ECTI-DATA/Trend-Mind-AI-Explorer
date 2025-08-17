@@ -124,17 +124,20 @@
                     <span class="lang-en">Project on GitHub</span>
                 </a>
             </p>
-            <div class="mt-4 text-sm text-gray-400">
-                <p class="lang-ar">
-                    <span>عدد الزوار: </span><span id="visitor-counter-ar">...</span>
-                    <span class="mx-2">|</span>
-                    <span>عدد التحميلات: </span><span id="download-counter-ar">...</span>
-                </p>
-                <p class="lang-en">
-                    <span>Visitors: </span><span id="visitor-counter-en">...</span>
-                    <span class="mx-2">|</span>
-                    <span>Downloads: </span><span id="download-counter-en">...</span>
-                </p>
+            <div class="mt-4 text-sm text-gray-400 flex justify-center items-center space-x-4 rtl:space-x-reverse">
+                <div class="flex items-center space-x-2 rtl:space-x-reverse">
+                    <span class="lang-ar">الزوار:</span>
+                    <span class="lang-en">Visitors:</span>
+                    <img src="https://hits.dwyl.com/ECTI-DATA/Trend-Mind-AI-Explorer.svg?style=flat-square" alt="Visitor Counter"/>
+                </div>
+                
+                <span class="text-gray-500">|</span>
+
+                <div class="flex items-center space-x-2 rtl:space-x-reverse">
+                    <span class="lang-ar">التحميلات:</span>
+                    <span class="lang-en">Downloads:</span>
+                    <span id="download-counter">...</span>
+                </div>
             </div>
         </div>
     </footer>
@@ -158,50 +161,31 @@
             }
         });
 
-        // ========= START: كود العدادات النهائي والموثوق =========
+        // ========= START: كود عداد التحميلات فقط =========
         document.addEventListener('DOMContentLoaded', () => {
-            const visitorCounters = [document.getElementById('visitor-counter-ar'), document.getElementById('visitor-counter-en')];
-            const downloadCounters = [document.getElementById('download-counter-ar'), document.getElementById('download-counter-en')];
+            const downloadCounter = document.getElementById('download-counter');
             
-            // --- تعريف متغيرات المشروع ---
             const githubUser = 'ECTI-DATA';
             const githubRepo = 'Trend-Mind-AI-Explorer';
-            const releaseTag = '1.1'; // من رابط التحميل
-            const counterDevNamespace = 'trendmind-ai-explorer'; // اسم فريد لصفحتك
+            const releaseTag = '1.1';
 
-            const updateCounterElements = (elements, value) => {
-                elements.forEach(el => { if (el) el.textContent = value; });
-            };
-
-            // --- 1. عداد الزوار (باستخدام خدمة counter.dev) ---
-            fetch(`https://api.counter.dev/v1/counter/${counterDevNamespace}/up`)
-                .then(response => response.json())
-                .then(data => {
-                    updateCounterElements(visitorCounters, data.count);
-                })
-                .catch(error => {
-                    console.error('Error fetching visitor count:', error);
-                    updateCounterElements(visitorCounters, 'N/A');
-                });
-
-            // --- 2. عداد التحميلات (مباشرة من GitHub API) ---
+            // جلب عدد التحميلات مباشرة من GitHub API
             fetch(`https://api.github.com/repos/${githubUser}/${githubRepo}/releases/tags/${releaseTag}`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.assets && data.assets.length > 0) {
-                        // جمع عدد التحميلات لكل الملفات في هذا الإصدار
                         const totalDownloads = data.assets.reduce((sum, asset) => sum + asset.download_count, 0);
-                        updateCounterElements(downloadCounters, totalDownloads);
+                        if (downloadCounter) downloadCounter.textContent = totalDownloads;
                     } else {
-                         updateCounterElements(downloadCounters, 0);
+                         if (downloadCounter) downloadCounter.textContent = 0;
                     }
                 })
                 .catch(error => {
                     console.error('Error fetching download count from GitHub:', error);
-                    updateCounterElements(downloadCounters, 'N/A');
+                    if (downloadCounter) downloadCounter.textContent = 'N/A';
                 });
         });
-        // ========= END: نهاية كود العدادات =========
+        // ========= END: نهاية الكود =========
     </script>
 
 </body>
