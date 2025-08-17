@@ -65,8 +65,12 @@
                 <span class="lang-en">Download Latest Version</span>
             </a>
             <p class="mt-4 text-sm text-gray-500">
-                <span class="lang-ar">متوافق مع نظام ويندوز</span>
-                <span class="lang-en">Compatible with Windows</span>
+                <span class="lang-ar">
+                    <span id="download-counter-hero-ar">...</span> عملية تحميل ناجحة
+                </span>
+                <span class="lang-en">
+                    Successful downloads: <span id="download-counter-hero-en">...</span>
+                </span>
             </p>
         </div>
     </main>
@@ -136,7 +140,7 @@
                 <div class="flex items-center space-x-2 rtl:space-x-reverse">
                     <span class="lang-ar">التحميلات:</span>
                     <span class="lang-en">Downloads:</span>
-                    <span id="download-counter">...</span>
+                    <span id="download-counter-footer">...</span>
                 </div>
             </div>
         </div>
@@ -161,28 +165,42 @@
             }
         });
 
-        // ========= START: كود عداد التحميلات فقط =========
+        // ========= START: كود عداد التحميلات المحدّث =========
         document.addEventListener('DOMContentLoaded', () => {
-            const downloadCounter = document.getElementById('download-counter');
+            // تحديد جميع عناصر العدادات التي سيتم تحديثها
+            const downloadCounters = [
+                document.getElementById('download-counter-footer'),
+                document.getElementById('download-counter-hero-ar'),
+                document.getElementById('download-counter-hero-en')
+            ];
             
             const githubUser = 'ECTI-DATA';
             const githubRepo = 'Trend-Mind-AI-Explorer';
             const releaseTag = '1.1';
+            const startingDownloads = 6; // الرقم الذي ستبدأ منه الإضافة
 
             // جلب عدد التحميلات مباشرة من GitHub API
             fetch(`https://api.github.com/repos/${githubUser}/${githubRepo}/releases/tags/${releaseTag}`)
                 .then(response => response.json())
                 .then(data => {
+                    let totalDownloads = 0;
                     if (data.assets && data.assets.length > 0) {
-                        const totalDownloads = data.assets.reduce((sum, asset) => sum + asset.download_count, 0);
-                        if (downloadCounter) downloadCounter.textContent = totalDownloads;
-                    } else {
-                         if (downloadCounter) downloadCounter.textContent = 0;
+                        totalDownloads = data.assets.reduce((sum, asset) => sum + asset.download_count, 0);
                     }
+                    
+                    // إضافة الرقم المبدئي إلى العدد الفعلي
+                    const displayDownloads = totalDownloads + startingDownloads;
+                    
+                    // تحديث جميع عناصر العدادات بالرقم الجديد
+                    downloadCounters.forEach(counter => {
+                        if (counter) counter.textContent = displayDownloads;
+                    });
                 })
                 .catch(error => {
                     console.error('Error fetching download count from GitHub:', error);
-                    if (downloadCounter) downloadCounter.textContent = 'N/A';
+                    downloadCounters.forEach(counter => {
+                        if (counter) counter.textContent = startingDownloads; // في حال الفشل، يظهر الرقم المبدئي
+                    });
                 });
         });
         // ========= END: نهاية الكود =========
