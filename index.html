@@ -69,14 +69,6 @@
                 <span class="lang-ar">متوافق مع نظام ويندوز</span>
                 <span class="lang-en">Compatible with Windows</span>
             </p>
-            <div class="mt-6 flex justify-center items-center space-x-4 rtl:space-x-reverse">
-                <a href="https://hits.sh/github.com/ECTI-DATA/Trend-Mind-AI-Explorer/visitors/">
-                    <img alt="Visitors" src="https://hits.sh/github.com/ECTI-DATA/Trend-Mind-AI-Explorer/visitors.svg?label=Visitors&color=1e3a8a&labelColor=3b82f6&extraCount=250"/>
-                </a>
-                <a href="https://hits.sh/github.com/ECTI-DATA/Trend-Mind-AI-Explorer/downloads/">
-                    <img alt="Downloads" src="https://hits.sh/github.com/ECTI-DATA/Trend-Mind-AI-Explorer/downloads.svg?label=Downloads&color=1e3a8a&labelColor=3b82f6&extraCount=24"/>
-                </a>
-            </div>
         </div>
     </main>
 
@@ -164,17 +156,6 @@
         </div>
     </section>
     
-    <section class="py-12 bg-gray-100">
-        <div class="container mx-auto px-6 flex justify-center items-center space-x-4 rtl:space-x-reverse">
-            <a href="https://hits.sh/github.com/ECTI-DATA/Trend-Mind-AI-Explorer/visitors/">
-                <img alt="Visitors" src="https://hits.sh/github.com/ECTI-DATA/Trend-Mind-AI-Explorer/visitors.svg?label=Visitors&color=1e3a8a&labelColor=3b82f6&extraCount=250"/>
-            </a>
-            <a href="https://hits.sh/github.com/ECTI-DATA/Trend-Mind-AI-Explorer/downloads/">
-                <img alt="Downloads" src="https://hits.sh/github.com/ECTI-DATA/Trend-Mind-AI-Explorer/downloads.svg?label=Downloads&color=1e3a8a&labelColor=3b82f6&extraCount=24"/>
-            </a>
-        </div>
-    </section>
-
     <footer class="bg-gray-800 text-white py-8">
         <div class="container mx-auto px-6 text-center">
             <p>
@@ -187,7 +168,19 @@
                     <span class="lang-en">Project on GitHub</span>
                 </a>
             </p>
+            <div class="mt-4 text-sm text-gray-400">
+                <p class="lang-ar">
+                    <span>عدد الزوار: </span><span id="visitor-counter-ar">...</span>
+                    <span class="mx-2">|</span>
+                    <span>عدد التحميلات: </span><span id="download-counter-ar">...</span>
+                </p>
+                <p class="lang-en">
+                    <span>Visitors: </span><span id="visitor-counter-en">...</span>
+                    <span class="mx-2">|</span>
+                    <span>Downloads: </span><span id="download-counter-en">...</span>
+                </p>
             </div>
+        </div>
     </footer>
 
     <script>
@@ -209,7 +202,49 @@
             }
         });
 
-        // The old counter script has been completely removed.
+        // ========= START: كود العدادات الجديد والمحدث =========
+        document.addEventListener('DOMContentLoaded', () => {
+            const downloadBtn = document.getElementById('download-btn');
+
+            const visitorCounters = [document.getElementById('visitor-counter-ar'), document.getElementById('visitor-counter-en')];
+            const downloadCounters = [document.getElementById('download-counter-ar'), document.getElementById('download-counter-en')];
+
+            const namespace = 'trendmind-ai-explorer'; // اسم فريد للمشروع
+            const visitsKey = 'page-visits'; // مفتاح لعدد الزوار
+            const downloadsKey = 'file-downloads'; // مفتاح لعدد التحميلات
+
+            const updateCounterElements = (elements, value) => {
+                elements.forEach(el => { if (el) el.textContent = value; });
+            };
+            
+            // دالة لجلب البيانات أو تحديثها
+            async function updateCount(key, action = 'get') {
+                try {
+                    const url = `https://api.counterapi.dev/${action}/${namespace}/${key}`;
+                    const response = await fetch(url);
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    const data = await response.json();
+                    return data.count;
+                } catch (error) {
+                    console.error(`Error with counter for key "${key}":`, error);
+                    return 'N/A';
+                }
+            }
+
+            // جلب وعرض عدد الزوار عند تحميل الصفحة
+            updateCount(visitsKey, 'up').then(count => updateCounterElements(visitorCounters, count));
+            
+            // جلب وعرض العدد الحالي للتحميلات
+            updateCount(downloadsKey).then(count => updateCounterElements(downloadCounters, count));
+
+            // عند الضغط على زر التحميل، قم بزيادة عداد التحميلات
+            if (downloadBtn) {
+                downloadBtn.addEventListener('click', () => {
+                    updateCount(downloadsKey, 'up').then(count => updateCounterElements(downloadCounters, count));
+                });
+            }
+        });
+        // ========= END: نهاية كود العدادات =========
     </script>
 
 </body>
