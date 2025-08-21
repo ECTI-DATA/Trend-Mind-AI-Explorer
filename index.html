@@ -158,55 +158,46 @@
             }
         });
 
-        // ========= START: كود عداد التحميلات عند النقر فقط =========
+        // ========= START: كود العدادات الصحيح والنهائي =========
         document.addEventListener('DOMContentLoaded', () => {
             const downloadBtn = document.getElementById('download-btn');
             const downloadCounterEl = document.getElementById('download-counter');
             
-            const namespace = 'trendmind-ai-downloads'; // معرف فريد لعداد التحميلات
+            const namespace = 'trendmind-ai-downloads-clicks'; // معرف فريد لعداد نقرات التحميل
             const baseCount = 24; // الرقم الذي سيبدأ منه العد
 
-            // دالة لتحديث الرقم المعروض
             const setDisplayCount = (count) => {
                 if (downloadCounterEl) {
                     downloadCounterEl.textContent = baseCount + count;
                 }
             };
+            
+            // 1. عند تحميل الصفحة، اقرأ العدد الأخير من ذاكرة المتصفح المحلية
+            const lastKnownCount = parseInt(localStorage.getItem(namespace), 10) || 0;
+            setDisplayCount(lastKnownCount);
 
-            // 1. عند تحميل الصفحة، جلب العدد الحالي للتحميلات (بدون زيادة)
-            fetch(`https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2FECTI-DATA%2FTrend-Mind-AI-Explorer%2F${namespace}&countColor=%232563eb`)
-                .then(res => res.json())
-                .then(data => {
-                    // العداد يعرض عدد النقرات، لذلك data.totalVisitors هو عدد النقرات
-                    setDisplayCount(data.totalVisitors);
-                })
-                .catch(error => {
-                    console.error("Failed to fetch initial download count:", error);
-                    setDisplayCount(0); // في حال الفشل، نعرض الرقم المبدئي
-                });
-
-
-            // 2. عند النقر على زر التحميل، زيادة العداد ثم بدء التحميل
+            // 2. عند النقر على زر التحميل، زيادة العداد عبر API وحفظ القيمة الجديدة
             if (downloadBtn) {
                 downloadBtn.addEventListener('click', (event) => {
-                    // منع التحميل الفوري
                     event.preventDefault(); 
                     
-                    // إرسال طلب لزيادة العداد
-                    fetch(`https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2FECTI-DATA%2FTrend-Mind-AI-Explorer%2F${namespace}&countColor=%232563eb&label=downloads`)
+                    fetch(`https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2FECTI-DATA%2FTrend-Mind-AI-Explorer%2F${namespace}`)
                         .then(res => res.json())
                         .then(data => {
-                            // تحديث الرقم المعروض بالعدد الجديد
-                            setDisplayCount(data.totalVisitors);
+                            const newCount = data.totalVisitors;
+                            // تحديث الرقم المعروض
+                            setDisplayCount(newCount);
+                            // حفظ الرقم الجديد في ذاكرة المتصفح
+                            localStorage.setItem(namespace, newCount);
 
-                            // بعد ضمان تحديث العداد، نبدأ التحميل يدوياً
+                            // بدء التحميل بعد ضمان تحديث العداد
                             setTimeout(() => {
                                 window.location.href = downloadBtn.href;
-                            }, 300);
+                            }, 100);
                         })
                         .catch(error => {
                             console.error("Failed to update download count:", error);
-                            // حتى لو فشل العداد، نسمح للمستخدم بالتحميل
+                            // حتى لو فشل العداد، اسمح للمستخدم بالتحميل
                             window.location.href = downloadBtn.href;
                         });
                 });
