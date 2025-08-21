@@ -202,60 +202,55 @@
             }
         });
 
-        // ========= START: كود العدادات الجديد والمحدث =========
+        // ========= START: كود العدادات الجديد =========
         document.addEventListener('DOMContentLoaded', () => {
             const downloadBtn = document.getElementById('download-btn');
 
+            // معرفات عناصر العدادات
             const visitorCounters = [document.getElementById('visitor-counter-ar'), document.getElementById('visitor-counter-en')];
             const downloadCounters = [document.getElementById('download-counter-ar'), document.getElementById('download-counter-en')];
 
-            const namespace = 'trendmind-ai-explorer'; // اسم فريد للمشروع
-            const visitsKey = 'page-visits'; // مفتاح لعدد الزوار
-            const downloadsKey = 'file-downloads'; // مفتاح لعدد التحميلات
+            // مساحة اسم فريدة لموقعك لتجنب التضارب مع مواقع أخرى
+            const namespace = 'trendmind-ai-explorer-page';
+            const visitKey = 'visits';
+            const downloadKey = 'downloads';
 
+            // دالة لتحديث جميع عناصر العدادات
             const updateCounterElements = (elements, value) => {
-                elements.forEach(el => { if (el) el.textContent = value; });
+                elements.forEach(el => {
+                    if (el) el.textContent = value;
+                });
             };
-            
-            // دالة لجلب البيانات أو تحديثها
-            async function updateCount(key, action = 'get') {
-                try {
-                    const url = `https://api.counterapi.dev/${action}/${namespace}/${key}`;
-                    const response = await fetch(url);
-                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                    const data = await response.json();
-                    return data.count;
-                } catch (error) {
-                    console.error(`Error with counter for key "${key}":`, error);
-                    return 'N/A';
-                }
-            }
 
-            // *** بداية الجزء الذي تم تعديله ***
+            // 1. جلب عدد الزوار وتحديثه
+            fetch(`https://api.countapi.xyz/hit/${namespace}/${visitKey}`)
+                .then(response => response.json())
+                .then(data => {
+                    updateCounterElements(visitorCounters, data.value);
+                })
+                .catch(error => console.error('Error fetching visitor count:', error));
 
-            // جلب وعرض عدد الزوار عند تحميل الصفحة
-            updateCount(visitsKey, 'up').then(count => {
-                const displayValue = (typeof count === 'number') ? count + 249 : 'N/A';
-                updateCounterElements(visitorCounters, displayValue);
-            });
-            
-            // جلب وعرض العدد الحالي للتحميلات
-            updateCount(downloadsKey).then(count => {
-                const displayValue = (typeof count === 'number') ? count + 24 : 'N/A';
-                updateCounterElements(downloadCounters, displayValue);
-            });
+            // 2. جلب العدد الحالي للتحميلات عند تحميل الصفحة
+            fetch(`https://api.countapi.xyz/get/${namespace}/${downloadKey}`)
+                .then(response => response.json())
+                .then(data => {
+                    // في حال عدم وجود تحميلات سابقة، القيمة قد تكون null
+                    updateCounterElements(downloadCounters, data.value || 0);
+                })
+                .catch(error => console.error('Error fetching initial download count:', error));
 
-            // عند الضغط على زر التحميل، قم بزيادة عداد التحميلات
+            // 3. عند الضغط على زر التحميل، قم بزيادة العداد
             if (downloadBtn) {
                 downloadBtn.addEventListener('click', () => {
-                    updateCount(downloadsKey, 'up').then(count => {
-                        const displayValue = (typeof count === 'number') ? count + 24 : 'N/A';
-                        updateCounterElements(downloadCounters, displayValue);
-                    });
+                    fetch(`https://api.countapi.xyz/hit/${namespace}/${downloadKey}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            updateCounterElements(downloadCounters, data.value);
+                        })
+                        .catch(error => console.error('Error updating download count:', error));
+                    // ملاحظة: لن نوقف عملية التحميل، ستستمر بشكل طبيعي
                 });
             }
-
-            // *** نهاية الجزء الذي تم تعديله ***
         });
         // ========= END: نهاية كود العدادات =========
     </script>
