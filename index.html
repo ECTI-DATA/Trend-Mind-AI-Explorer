@@ -232,15 +232,15 @@
             }
 
             // جلب وعرض عدد الزوار عند تحميل الصفحة
-            updateCount(visitsKey, 'up').then(count => updateCounterElements(visitorCounters, count));
+            updateCount(visitsKey, 'up').then(count => updateCounterElements(visitorCounters, count + 249));
             
             // جلب وعرض العدد الحالي للتحميلات
-            updateCount(downloadsKey).then(count => updateCounterElements(downloadCounters, count));
+            updateCount(downloadsKey).then(count => updateCounterElements(downloadCounters, count + 24));
 
             // عند الضغط على زر التحميل، قم بزيادة عداد التحميلات
             if (downloadBtn) {
                 downloadBtn.addEventListener('click', () => {
-                    updateCount(downloadsKey, 'up').then(count => updateCounterElements(downloadCounters, count));
+                    updateCount(downloadsKey, 'up').then(count => updateCounterElements(downloadCounters, count + 24));
                 });
             }
         });
