@@ -62,8 +62,8 @@
         </p>
         <div class="mt-10">
             <a id="download-btn" href="https://github.com/ECTI-DATA/Trend-Mind-AI-Explorer/releases/download/1.1/TrendMindAI-Explorer-v1.3-setup.exe" class="gradient-bg text-white font-bold text-lg py-4 px-10 rounded-full hover:shadow-xl transform hover:scale-105 transition duration-300 inline-block">
-                <span class="lang-ar">تحميل أحدث إصدار 1.3</span>
-                <span class="lang-en">Download Latest Version 1.3</span>
+                <span class="lang-ar">تحميل أحدث إصدار</span>
+                <span class="lang-en">Download Latest Version</span>
             </a>
             <p class="mt-4 text-sm text-gray-500">
                 <span class="lang-ar">متوافق مع نظام ويندوز</span>
@@ -209,38 +209,37 @@
             const visitorCounters = [document.getElementById('visitor-counter-ar'), document.getElementById('visitor-counter-en')];
             const downloadCounters = [document.getElementById('download-counter-ar'), document.getElementById('download-counter-en')];
 
-            const namespace = 'trendmind-ai-explorer'; // اسم فريد للمشروع
-            const visitsKey = 'page-visits'; // مفتاح لعدد الزوار
-            const downloadsKey = 'file-downloads'; // مفتاح لعدد التحميلات
+            const namespace = 'trendmind-ai-explorer-page';
+            const visitKey = 'visits';
+            const downloadKey = 'downloads';
 
             const updateCounterElements = (elements, value) => {
                 elements.forEach(el => { if (el) el.textContent = value; });
             };
-            
-            // دالة لجلب البيانات أو تحديثها
-            async function updateCount(key, action = 'get') {
-                try {
-                    const url = `https://api.counterapi.dev/${action}/${namespace}/${key}`;
-                    const response = await fetch(url);
-                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                    const data = await response.json();
-                    return data.count;
-                } catch (error) {
-                    console.error(`Error with counter for key "${key}":`, error);
-                    return 'N/A';
-                }
+
+            function handleCount(key, elements, action = 'get') {
+                const url = `https://abacus.jasoncameron.dev/${action}/${namespace}/${key}`;
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        updateCounterElements(elements, data.value);
+                    })
+                    .catch(error => {
+                        console.error(`Error with counter for key "${key}":`, error);
+                        updateCounterElements(elements, 'N/A');
+                    });
             }
 
-            // جلب وعرض عدد الزوار عند تحميل الصفحة
-            updateCount(visitsKey, 'up').then(count => updateCounterElements(visitorCounters, count));
+            // جلب وعرض عدد الزوار (وزيادته)
+            handleCount(visitKey, visitorCounters, 'hit');
             
             // جلب وعرض العدد الحالي للتحميلات
-            updateCount(downloadsKey).then(count => updateCounterElements(downloadCounters, count));
+            handleCount(downloadKey, downloadCounters, 'get');
 
             // عند الضغط على زر التحميل، قم بزيادة عداد التحميلات
             if (downloadBtn) {
                 downloadBtn.addEventListener('click', () => {
-                    updateCount(downloadsKey, 'up').then(count => updateCounterElements(downloadCounters, count));
+                    handleCount(downloadKey, downloadCounters, 'hit');
                 });
             }
         });
