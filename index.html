@@ -62,8 +62,8 @@
         </p>
         <div class="mt-10">
             <a id="download-btn" href="https://github.com/ECTI-DATA/Trend-Mind-AI-Explorer/releases/download/1.1/TrendMindAI-Explorer-v1.3-setup.exe" class="gradient-bg text-white font-bold text-lg py-4 px-10 rounded-full hover:shadow-xl transform hover:scale-105 transition duration-300 inline-block">
-                <span class="lang-ar">تحميل أحدث إصدار</span>
-                <span class="lang-en">Download Latest Version</span>
+                <span class="lang-ar">تحميل أحدث إصدار 1.3</span>
+                <span class="lang-en">Download Latest Version 1.3</span>
             </a>
             <p class="mt-4 text-sm text-gray-500">
                 <span class="lang-ar">متوافق مع نظام ويندوز</span>
@@ -202,44 +202,53 @@
             }
         });
 
-        // ========= START: كود العدادات الجديد والمحدث =========
+        // ========= START: كود العدادات الجديد =========
         document.addEventListener('DOMContentLoaded', () => {
             const downloadBtn = document.getElementById('download-btn');
 
+            // معرفات عناصر العدادات
             const visitorCounters = [document.getElementById('visitor-counter-ar'), document.getElementById('visitor-counter-en')];
             const downloadCounters = [document.getElementById('download-counter-ar'), document.getElementById('download-counter-en')];
 
+            // مساحة اسم فريدة لموقعك لتجنب التضارب مع مواقع أخرى
             const namespace = 'trendmind-ai-explorer-page';
             const visitKey = 'visits';
             const downloadKey = 'downloads';
 
+            // دالة لتحديث جميع عناصر العدادات
             const updateCounterElements = (elements, value) => {
-                elements.forEach(el => { if (el) el.textContent = value; });
+                elements.forEach(el => {
+                    if (el) el.textContent = value;
+                });
             };
 
-            function handleCount(key, elements, action = 'get') {
-                const url = `https://abacus.jasoncameron.dev/${action}/${namespace}/${key}`;
-                fetch(url)
-                    .then(response => response.json())
-                    .then(data => {
-                        updateCounterElements(elements, data.value);
-                    })
-                    .catch(error => {
-                        console.error(`Error with counter for key "${key}":`, error);
-                        updateCounterElements(elements, 'N/A');
-                    });
-            }
+            // 1. جلب عدد الزوار وتحديثه
+            fetch(`https://api.countapi.xyz/hit/${namespace}/${visitKey}`)
+                .then(response => response.json())
+                .then(data => {
+                    updateCounterElements(visitorCounters, data.value);
+                })
+                .catch(error => console.error('Error fetching visitor count:', error));
 
-            // جلب وعرض عدد الزوار (وزيادته)
-            handleCount(visitKey, visitorCounters, 'hit');
-            
-            // جلب وعرض العدد الحالي للتحميلات
-            handleCount(downloadKey, downloadCounters, 'get');
+            // 2. جلب العدد الحالي للتحميلات عند تحميل الصفحة
+            fetch(`https://api.countapi.xyz/get/${namespace}/${downloadKey}`)
+                .then(response => response.json())
+                .then(data => {
+                    // في حال عدم وجود تحميلات سابقة، القيمة قد تكون null
+                    updateCounterElements(downloadCounters, data.value || 0);
+                })
+                .catch(error => console.error('Error fetching initial download count:', error));
 
-            // عند الضغط على زر التحميل، قم بزيادة عداد التحميلات
+            // 3. عند الضغط على زر التحميل، قم بزيادة العداد
             if (downloadBtn) {
                 downloadBtn.addEventListener('click', () => {
-                    handleCount(downloadKey, downloadCounters, 'hit');
+                    fetch(`https://api.countapi.xyz/hit/${namespace}/${downloadKey}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            updateCounterElements(downloadCounters, data.value);
+                        })
+                        .catch(error => console.error('Error updating download count:', error));
+                    // ملاحظة: لن نوقف عملية التحميل، ستستمر بشكل طبيعي
                 });
             }
         });
