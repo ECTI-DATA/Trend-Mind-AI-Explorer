@@ -25,6 +25,7 @@
             transform: translateY(-10px);
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
+        /* Hide elements of the other language */
         .lang-en .lang-ar, .lang-ar .lang-en {
             display: none;
         }
@@ -64,10 +65,17 @@
                 <span class="lang-ar">تحميل أحدث إصدار 1.3</span>
                 <span class="lang-en">Download Latest Version 1.3</span>
             </a>
-            <div class="mt-4 flex justify-center items-center space-x-2 rtl:space-x-reverse text-gray-600">
-                <span class="lang-ar">التحميلات:</span>
-                <span class="lang-en">Downloads:</span>
-                <span id="download-counter" class="font-bold text-blue-600">...</span>
+            <p class="mt-4 text-sm text-gray-500">
+                <span class="lang-ar">متوافق مع نظام ويندوز</span>
+                <span class="lang-en">Compatible with Windows</span>
+            </p>
+            <div class="mt-6 flex justify-center items-center space-x-4 rtl:space-x-reverse">
+                <a href="https://hits.sh/github.com/ECTI-DATA/Trend-Mind-AI-Explorer/visitors/">
+                    <img alt="Visitors" src="https://hits.sh/github.com/ECTI-DATA/Trend-Mind-AI-Explorer/visitors-v2.svg?label=Visitors&color=1e3a8a&labelColor=3b82f6&extraCount=250"/>
+                </a>
+                <a href="https://hits.sh/github.com/ECTI-DATA/Trend-Mind-AI-Explorer/downloads/">
+                    <img alt="Downloads" src="https://hits.sh/github.com/ECTI-DATA/Trend-Mind-AI-Explorer/downloads.svg?label=Downloads&color=1e3a8a&labelColor=3b82f6&extraCount=24"/>
+                </a>
             </div>
         </div>
     </main>
@@ -79,37 +87,91 @@
                 <span class="lang-en">Program Features</span>
             </h3>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                
                 <div class="feature-card bg-gray-50 p-8 rounded-xl shadow-md text-center">
                     <div class="text-5xl mb-4">📊</div>
-                    <h4 class="text-2xl font-bold mb-3"><span class="lang-ar">عارض تحليلات الذكاء الاصطناعي</span><span class="lang-en">AI Analysis Viewer</span></h4>
-                    <p class="text-gray-600"><span class="lang-ar">افتح وتصفح ملفات PWS التي تحتوي على تحليلات سوق متقدمة تم إنشاؤها بواسطة الذكاء الاصطناعي.</span><span class="lang-en">Open and browse PWS files containing advanced, AI-generated market analysis.</span></p>
+                    <h4 class="text-2xl font-bold mb-3">
+                        <span class="lang-ar">عارض تحليلات الذكاء الاصطناعي</span>
+                        <span class="lang-en">AI Analysis Viewer</span>
+                    </h4>
+                    <p class="text-gray-600">
+                        <span class="lang-ar">افتح وتصفح ملفات PWS التي تحتوي على تحليلات سوق متقدمة تم إنشاؤها بواسطة الذكاء الاصطناعي.</span>
+                        <span class="lang-en">Open and browse PWS files containing advanced, AI-generated market analysis.</span>
+                    </p>
                 </div>
+
                 <div class="feature-card bg-gray-50 p-8 rounded-xl shadow-md text-center">
                     <div class="text-5xl mb-4">📈</div>
-                    <h4 class="text-2xl font-bold mb-3"><span class="lang-ar">رسوم بيانية تفاعلية</span><span class="lang-en">Interactive Charts</span></h4>
-                    <p class="text-gray-600"><span class="lang-ar">عرض بيانات الشموع اليابانية مع إمكانيات كاملة للتكبير والتحريك لاستكشاف تفاصيل الرسم البياني.</span><span class="lang-en">View candlestick data with full pan and zoom capabilities to explore chart details.</span></p>
+                    <h4 class="text-2xl font-bold mb-3">
+                        <span class="lang-ar">رسوم بيانية تفاعلية</span>
+                        <span class="lang-en">Interactive Charts</span>
+                    </h4>
+                    <p class="text-gray-600">
+                        <span class="lang-ar">عرض بيانات الشموع اليابانية مع إمكانيات كاملة للتكبير والتحريك لاستكشاف تفاصيل الرسم البياني.</span>
+                        <span class="lang-en">View candlestick data with full pan and zoom capabilities to explore chart details.</span>
+                    </p>
                 </div>
+
                 <div class="feature-card bg-gray-50 p-8 rounded-xl shadow-md text-center">
                     <div class="text-5xl mb-4">🎨</div>
-                    <h4 class="text-2xl font-bold mb-3"><span class="lang-ar">أدوات رسم متقدمة</span><span class="lang-en">Advanced Plotting Tools</span></h4>
-                    <p class="text-gray-600"><span class="lang-ar">تحكم في رؤية المستويات السعرية، القنوات، وخطوط الاتجاه الصاعدة والهابطة بضغطة زر.</span><span class="lang-en">Control the visibility of price levels, channels, and up/down trend lines with a single click.</span></p>
+                    <h4 class="text-2xl font-bold mb-3">
+                        <span class="lang-ar">أدوات رسم متقدمة</span>
+                        <span class="lang-en">Advanced Plotting Tools</span>
+                    </h4>
+                    <p class="text-gray-600">
+                        <span class="lang-ar">تحكم في رؤية المستويات السعرية، القنوات، وخطوط الاتجاه الصاعدة والهابطة بضغطة زر.</span>
+                        <span class="lang-en">Control the visibility of price levels, channels, and up/down trend lines with a single click.</span>
+                    </p>
                 </div>
+                
                 <div class="feature-card bg-gray-50 p-8 rounded-xl shadow-md text-center">
                     <div class="text-5xl mb-4">🌟</div>
-                    <h4 class="text-2xl font-bold mb-3"><span class="lang-ar">تحديد الدعم والمقاومة</span><span class="lang-en">S/R Identification</span></h4>
-                    <p class="text-gray-600"><span class="lang-ar">ميزة فريدة تحدد تلقائيًا أهم الأهداف السعرية والزمنية للدعم والمقاومة التي يجب مراقبتها.</span><span class="lang-en">A unique feature that automatically highlights the most important time and price targets for support and resistance.</span></p>
+                    <h4 class="text-2xl font-bold mb-3">
+                        <span class="lang-ar">تحديد الدعم والمقاومة</span>
+                        <span class="lang-en">S/R Identification</span>
+                    </h4>
+                    <p class="text-gray-600">
+                        <span class="lang-ar">ميزة فريدة تحدد تلقائيًا أهم الأهداف السعرية والزمنية للدعم والمقاومة التي يجب مراقبتها.</span>
+                        <span class="lang-en">A unique feature that automatically highlights the most important time and price targets for support and resistance.</span>
+                    </p>
                 </div>
+
                 <div class="feature-card bg-gray-50 p-8 rounded-xl shadow-md text-center">
                     <div class="text-5xl mb-4">🔄</div>
-                    <h4 class="text-2xl font-bold mb-3"><span class="lang-ar">تحديث تلقائي للبيانات</span><span class="lang-en">Automatic Data Refresh</span></h4>
-                    <p class="text-gray-600"><span class="lang-ar">يقوم التطبيق بجلب أحدث بيانات الشموع اليابانية تلقائيًا لضمان بقاء تحليلاتك محدثة.</span><span class="lang-en">The application automatically fetches the latest candlestick data to keep your analysis up-to-date.</span></p>
+                    <h4 class="text-2xl font-bold mb-3">
+                        <span class="lang-ar">تحديث تلقائي للبيانات</span>
+                        <span class="lang-en">Automatic Data Refresh</span>
+                    </h4>
+                    <p class="text-gray-600">
+                        <span class="lang-ar">يقوم التطبيق بجلب أحدث بيانات الشموع اليابانية تلقائيًا لضمان بقاء تحليلاتك محدثة.</span>
+                        <span class="lang-en">The application automatically fetches the latest candlestick data to keep your analysis up-to-date.</span>
+                    </p>
                 </div>
+
                 <div class="feature-card bg-gray-50 p-8 rounded-xl shadow-md text-center">
                     <div class="text-5xl mb-4">🌍</div>
-                    <h4 class="text-2xl font-bold mb-3"><span class="lang-ar">دعم ثنائي اللغة</span><span class="lang-en">Bilingual Support</span></h4>
-                    <p class="text-gray-600"><span class="lang-ar">واجهة مستخدم كاملة متاحة باللغتين العربية والإنجليزية لسهولة الاستخدام.</span><span class="lang-en">A full user interface available in both Arabic and English for ease of use.</span></p>
+                    <h4 class="text-2xl font-bold mb-3">
+                        <span class="lang-ar">دعم ثنائي اللغة</span>
+                        <span class="lang-en">Bilingual Support</span>
+                    </h4>
+                    <p class="text-gray-600">
+                        <span class="lang-ar">واجهة مستخدم كاملة متاحة باللغتين العربية والإنجليزية لسهولة الاستخدام.</span>
+                        <span class="lang-en">A full user interface available in both Arabic and English for ease of use.</span>
+                    </p>
                 </div>
+
             </div>
+        </div>
+    </section>
+    
+    <section class="py-12 bg-gray-100">
+        <div class="container mx-auto px-6 flex justify-center items-center space-x-4 rtl:space-x-reverse">
+            <a href="https://hits.sh/github.com/ECTI-DATA/Trend-Mind-AI-Explorer/visitors/">
+                <img alt="Visitors" src="https://hits.sh/github.com/ECTI-DATA/Trend-Mind-AI-Explorer/visitors-v2.svg?label=Visitors&color=1e3a8a&labelColor=3b82f6&extraCount=250"/>
+            </a>
+            <a href="https://hits.sh/github.com/ECTI-DATA/Trend-Mind-AI-Explorer/downloads/">
+                <img alt="Downloads" src="https://hits.sh/github.com/ECTI-DATA/Trend-Mind-AI-Explorer/downloads.svg?label=Downloads&color=1e3a8a&labelColor=3b82f6&extraCount=24"/>
+            </a>
         </div>
     </section>
 
@@ -125,12 +187,7 @@
                     <span class="lang-en">Project on GitHub</span>
                 </a>
             </p>
-            <div class="mt-4 flex justify-center items-center space-x-2 rtl:space-x-reverse">
-                 <span class="lang-ar">الزوار:</span>
-                 <span class="lang-en">Visitors:</span>
-                 <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2FECTI-DATA%2FTrend-Mind-AI-Explorer-Page&countColor=%239ca3af" alt="Visitors"/>
             </div>
-        </div>
     </footer>
 
     <script>
@@ -152,46 +209,7 @@
             }
         });
 
-        // ========= START: كود عداد التحميلات عند النقر فقط =========
-        document.addEventListener('DOMContentLoaded', () => {
-            const downloadBtn = document.getElementById('download-btn');
-            const downloadCounterEl = document.getElementById('download-counter');
-            
-            const namespace = 'trendmind-ai-downloads-clicks'; 
-            const baseCount = 24;
-
-            const setDisplayCount = (count) => {
-                if (downloadCounterEl) {
-                    downloadCounterEl.textContent = baseCount + count;
-                }
-            };
-            
-            const lastKnownCount = parseInt(localStorage.getItem(namespace), 10) || 0;
-            setDisplayCount(lastKnownCount);
-
-            if (downloadBtn) {
-                downloadBtn.addEventListener('click', (event) => {
-                    event.preventDefault(); 
-                    
-                    fetch(`https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2FECTI-DATA%2FTrend-Mind-AI-Explorer%2F${namespace}`)
-                        .then(res => res.json())
-                        .then(data => {
-                            const newCount = data.totalVisitors;
-                            setDisplayCount(newCount);
-                            localStorage.setItem(namespace, newCount);
-
-                            setTimeout(() => {
-                                window.location.href = downloadBtn.href;
-                            }, 100);
-                        })
-                        .catch(error => {
-                            console.error("Failed to update download count:", error);
-                            window.location.href = downloadBtn.href;
-                        });
-                });
-            }
-        });
-        // ========= END: نهاية الكود =========
+        // The old counter script has been completely removed.
     </script>
 
 </body>
