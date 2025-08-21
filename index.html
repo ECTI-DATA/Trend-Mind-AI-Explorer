@@ -231,18 +231,31 @@
                 }
             }
 
+            // *** بداية الجزء الذي تم تعديله ***
+
             // جلب وعرض عدد الزوار عند تحميل الصفحة
-            updateCount(visitsKey, 'up').then(count => updateCounterElements(visitorCounters, count + 249));
+            updateCount(visitsKey, 'up').then(count => {
+                const displayValue = (typeof count === 'number') ? count + 249 : 'N/A';
+                updateCounterElements(visitorCounters, displayValue);
+            });
             
             // جلب وعرض العدد الحالي للتحميلات
-            updateCount(downloadsKey).then(count => updateCounterElements(downloadCounters, count + 24));
+            updateCount(downloadsKey).then(count => {
+                const displayValue = (typeof count === 'number') ? count + 24 : 'N/A';
+                updateCounterElements(downloadCounters, displayValue);
+            });
 
             // عند الضغط على زر التحميل، قم بزيادة عداد التحميلات
             if (downloadBtn) {
                 downloadBtn.addEventListener('click', () => {
-                    updateCount(downloadsKey, 'up').then(count => updateCounterElements(downloadCounters, count + 24));
+                    updateCount(downloadsKey, 'up').then(count => {
+                        const displayValue = (typeof count === 'number') ? count + 24 : 'N/A';
+                        updateCounterElements(downloadCounters, displayValue);
+                    });
                 });
             }
+
+            // *** نهاية الجزء الذي تم تعديله ***
         });
         // ========= END: نهاية كود العدادات =========
     </script>
