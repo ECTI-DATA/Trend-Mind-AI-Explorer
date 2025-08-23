@@ -64,11 +64,15 @@
                 <span class="lang-ar">تحميل أحدث إصدار 1.3</span>
                 <span class="lang-en">Download Latest Version 1.3</span>
             </a>
-             <div class="mt-6 flex justify-center items-center space-x-6 rtl:space-x-reverse">
+            <p class="mt-4 text-sm text-gray-500">
+                <span class="lang-ar">متوافق مع نظام ويندوز</span>
+                <span class="lang-en">Compatible with Windows</span>
+            </p>
+            <div class="mt-6 flex justify-center items-center space-x-6 rtl:space-x-reverse">
                 <div class="flex items-center space-x-2 rtl:space-x-reverse text-gray-600">
                     <span class="lang-ar">الزوار:</span>
                     <span class="lang-en">Visitors:</span>
-                    <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2FECTI-DATA%2FTrend-Mind-AI-Explorer-Page&countColor=%239ca3af&extraCount=330" alt="Visitors"/>alt="Visitors"/>
+                    <img src="https://hits.sh/github.com/ECTI-DATA/Trend-Mind-AI-Explorer.svg?extraCount=330" alt="Visitors"/>
                 </div>
                 <div class="flex items-center space-x-2 rtl:space-x-reverse text-gray-600">
                     <span class="lang-ar">التحميلات:</span>
@@ -154,13 +158,13 @@
             }
         });
 
-        // ========= START: كود عداد التحميلات النهائي =========
+        // ========= START: كود عداد التحميلات المعتمد على ذاكرة المتصفح فقط =========
         document.addEventListener('DOMContentLoaded', () => {
             const downloadBtn = document.getElementById('download-btn');
             const downloadCounterEl = document.getElementById('download-counter');
             
             const counterKey = 'trendmind_local_download_count_final';
-            const baseCount = 31; // الرقم المبدئي المطلوب
+            const baseCount = 31;
 
             const updateDisplay = (count) => {
                 if (downloadCounterEl) {
@@ -173,22 +177,13 @@
 
             if (downloadBtn) {
                 downloadBtn.addEventListener('click', (event) => {
-                    // 1. منع التحميل الفوري
                     event.preventDefault();
-
-                    // 2. زيادة الرقم
                     currentCount++;
-                    
-                    // 3. حفظ الرقم الجديد في الذاكرة
                     localStorage.setItem(counterKey, currentCount);
-                    
-                    // 4. تحديث الرقم المعروض على الصفحة
                     updateDisplay(currentCount);
-                    
-                    // 5. بدء التحميل بعد فترة قصيرة لضمان إتمام الحفظ
                     setTimeout(() => {
                         window.location.href = downloadBtn.href;
-                    }, 200); // 200 ميلي ثانية
+                    }, 200);
                 });
             }
         });
@@ -197,4 +192,3 @@
 
 </body>
 </html>
-
