@@ -64,10 +64,6 @@
                 <span class="lang-ar">تحميل أحدث إصدار 1.3</span>
                 <span class="lang-en">Download Latest Version 1.3</span>
             </a>
-            <p class="mt-4 text-sm text-gray-500">
-                <span class="lang-ar">متوافق مع نظام ويندوز</span>
-                <span class="lang-en">Compatible with Windows</span>
-            </p>
             <div class="mt-6 flex justify-center items-center space-x-6 rtl:space-x-reverse">
                 <div class="flex items-center space-x-2 rtl:space-x-reverse text-gray-600">
                     <span class="lang-ar">الزوار:</span>
@@ -90,7 +86,7 @@
                 <span class="lang-en">Program Features</span>
             </h3>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                <div class="feature-card bg-gray-50 p-8 rounded-xl shadow-md text-center">
+                 <div class="feature-card bg-gray-50 p-8 rounded-xl shadow-md text-center">
                     <div class="text-5xl mb-4">📊</div>
                     <h4 class="text-2xl font-bold mb-3"><span class="lang-ar">عارض تحليلات الذكاء الاصطناعي</span><span class="lang-en">AI Analysis Viewer</span></h4>
                     <p class="text-gray-600"><span class="lang-ar">افتح وتصفح ملفات PWS التي تحتوي على تحليلات سوق متقدمة تم إنشاؤها بواسطة الذكاء الاصطناعي.</span><span class="lang-en">Open and browse PWS files containing advanced, AI-generated market analysis.</span></p>
@@ -158,32 +154,44 @@
             }
         });
 
-        // ========= START: كود عداد التحميلات المعتمد على ذاكرة المتصفح فقط =========
+        // ========= START: كود عداد التحميلات النهائي المعتمد على GitHub API =========
         document.addEventListener('DOMContentLoaded', () => {
-            const downloadBtn = document.getElementById('download-btn');
             const downloadCounterEl = document.getElementById('download-counter');
+            const downloadBtn = document.getElementById('download-btn');
             
-            const counterKey = 'trendmind_local_download_count_final';
-            const baseCount = 31;
+            const githubUser = 'ECTI-DATA';
+            const githubRepo = 'Trend-Mind-AI-Explorer';
+            const releaseTag = '1.1';
+            const baseCount = 31; // الرقم المبدئي الذي تريده
 
-            const updateDisplay = (count) => {
-                if (downloadCounterEl) {
-                    downloadCounterEl.textContent = baseCount + count;
-                }
-            };
+            // 1. عند تحميل الصفحة، جلب العدد الرسمي من GitHub
+            fetch(`https://api.github.com/repos/${githubUser}/${githubRepo}/releases/tags/${releaseTag}`)
+                .then(response => response.json())
+                .then(data => {
+                    let githubDownloads = 0;
+                    if (data.assets && data.assets.length > 0) {
+                        githubDownloads = data.assets.reduce((sum, asset) => sum + asset.download_count, 0);
+                    }
+                    const totalDownloads = baseCount + githubDownloads;
+                    if (downloadCounterEl) {
+                        downloadCounterEl.textContent = totalDownloads;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching download count from GitHub:', error);
+                    if (downloadCounterEl) {
+                        downloadCounterEl.textContent = baseCount; // عرض الرقم المبدئي في حال الفشل
+                    }
+                });
 
-            let currentCount = parseInt(localStorage.getItem(counterKey), 10) || 0;
-            updateDisplay(currentCount);
-
-            if (downloadBtn) {
-                downloadBtn.addEventListener('click', (event) => {
-                    event.preventDefault();
-                    currentCount++;
-                    localStorage.setItem(counterKey, currentCount);
-                    updateDisplay(currentCount);
-                    setTimeout(() => {
-                        window.location.href = downloadBtn.href;
-                    }, 200);
+            // 2. عند النقر على زر التحميل، زيادة الرقم المعروض فورًا
+            if (downloadBtn && downloadCounterEl) {
+                downloadBtn.addEventListener('click', () => {
+                    // زيادة الرقم المعروض حاليًا بمقدار واحد للمستخدم الحالي فورًا
+                    const currentDisplayCount = parseInt(downloadCounterEl.textContent, 10);
+                    if (!isNaN(currentDisplayCount)) {
+                        downloadCounterEl.textContent = currentDisplayCount + 1;
+                    }
                 });
             }
         });
